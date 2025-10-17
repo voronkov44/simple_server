@@ -14,6 +14,8 @@ func Logging(next http.Handler) http.Handler {
 			StatusCode:     http.StatusOK, // дефолтное значение
 		}
 		next.ServeHTTP(wrapper, r)
-		log.Printf("%d %s %s %s %v", wrapper.StatusCode, r.Method, r.URL.Path, r.RemoteAddr, time.Since(start))
+
+		duration := time.Since(start)
+		log.Printf("%d | %s | %s | %s | %v", wrapper.StatusCode, r.Method, r.URL.Path, r.RemoteAddr, duration)
 	})
 }
